@@ -1,0 +1,20 @@
+{
+    "name": "dv.ger/test-my-sql",
+    "type": "project",
+    "authors": [
+        {
+            "name": "Dmitriy",
+            "email": "dv.ger@ya.ru"
+        }
+    ],
+    "require": {},
+
+    "autoload": {
+        "psr-4": {},
+        "classmap": [
+            "classes/"
+        ],
+        "files": [
+        ]
+    }
+}
