@@ -16,8 +16,8 @@ class Logic
      */
     public static function process($line)
     {
-        $DP = new LineItemManager('LineItem');
-        $item = $DP->getById(self::ID);
+        $manager = new LineItemManager('LineItem');
+        $item = $manager->getById(self::ID);
         $item->line10 .= $item->line9;
         for ($i = 9; $i > 1; $i--) {
             $currentLine = 'line' . $i;
@@ -25,6 +25,6 @@ class Logic
             $item->$currentLine = $item->$nextLine;
         }
         $item->line1 = $line;
-        $DP->update($item);
+        $manager->update($item);
     }
 }
