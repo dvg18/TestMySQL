@@ -35,7 +35,7 @@ class _LineItem
      */
     public static function getTableName()
     {
-        return CFG_MYSQL_DATABASE . '.' . self::$tableName;
+        return '`' . CFG_MYSQL_DATABASE . '`.`' . self::$tableName . '`';
     }
 
     /**

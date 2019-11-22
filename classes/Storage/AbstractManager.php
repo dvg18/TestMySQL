@@ -41,7 +41,7 @@ class AbstractManager implements CommonInterface
      */
     public function getById($id)
     {
-        $item = API::selectOne('SELECT * FROM ' . $this->tableName . ' WHERE id = :id', array(':id' => $id));
+        $item = API::selectOne('SELECT * FROM ' . $this->tableName . ' WHERE `id` = :id', array(':id' => $id));
         return empty($item)
             ? FALSE
             : $this->_extractItemFromQueryResult($item);
@@ -123,18 +123,21 @@ class AbstractManager implements CommonInterface
      */
     public function update(BaseClass $entity)
     {
-        $values = '';
-        foreach ($this->ptfMapping as $key => $value) {
-            $values .= $value . '=' . (empty($entity->$key)
+        $values = array(':id' => $entity->Id);
+        $valuesLine = '';
+        foreach ($this->ptfMapping as $value => $key) {
+            $valuesLine .= '`' . $key . '` = :' . $key . ',';
+            $values[$key] = empty($entity->$value)
                 ? 'NULL'
-                : $entity->$key) . ' ,';
+                : ($entity->$value);
         }
-        $values = substr($values,0,-1);
+        $valuesLine = substr($valuesLine, 0, -1); //remove last ',' (comma) symbol
 
         return API::execute(
             'UPDATE ' . $this->tableName
-            . ' SET ' . $values .
-            ' WHERE id=' . $entity->Id
+            . ' SET ' . $valuesLine
+            . ' WHERE `id` = :id',
+            $values
         );
     }
 
@@ -143,6 +146,6 @@ class AbstractManager implements CommonInterface
      */
     public function remove($entityId)
     {
-        return API::execute('DELETE FROM ' . $this->tableName . ' WHERE id = :id', array(':id' => $entityId));
+        return API::execute('DELETE FROM ' . $this->tableName . ' WHERE `id` = :id', array(':id' => $entityId));
     }
 }
