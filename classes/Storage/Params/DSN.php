@@ -1,10 +1,10 @@
 <?php
 
-namespace DB\Params;
+namespace Storage\Params;
 
 /**
  * DSN parameter
- * @package DB\Params
+ * @package Storage\Params
  */
 class DSN
 {

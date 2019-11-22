@@ -3,6 +3,7 @@
 require_once 'config.inc.php';
 
 $controller = new Controller();
+
 try {
     $controller->process();
 } catch (Exception $ex) {

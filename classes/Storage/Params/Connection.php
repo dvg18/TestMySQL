@@ -1,10 +1,10 @@
 <?php
 
-namespace DB\Params;
+namespace Storage\Params;
 
 /**
  * Connection parameters
- * @package DB\Params
+ * @package Storage\Params
  */
 class Connection
 {
@@ -41,7 +41,7 @@ class Connection
      * @param string $password Password
      * @param string $encoding Database encoding
      */
-    public function __construct($dsn, $username, $password, $encoding = 'latin1')
+    public function __construct($dsn, $username, $password, $encoding = 'utf8_general_ci')
     {
         $this->dsn = $dsn;
         $this->username = $username;

@@ -1,17 +1,23 @@
 <?php
 
+use Storage\LineItemManager;
 
-use DB\LineItemManager;
-
+/**
+ * Class Logic
+ */
 class Logic
 {
+    /** @var int id of used row */
     const ID = 1;
 
-    public static function procces($line)
+    /**
+     * @param string $line
+     * @throws Exception
+     */
+    public static function process($line)
     {
         $DP = new LineItemManager('LineItem');
         $item = $DP->getById(self::ID);
-        print_r($line);
         $item->line10 .= $item->line9;
         for ($i = 9; $i > 1; $i--) {
             $currentLine = 'line' . $i;

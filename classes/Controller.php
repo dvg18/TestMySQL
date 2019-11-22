@@ -1,18 +1,10 @@
 <?php
 
+/**
+ * Class Controller
+ */
 class Controller
 {
-    /**
-     *
-     * @var Callable[] Defined methods which can be run
-     */
-    private $_actions = array();
-
-    public function __construct()
-    {
-
-    }
-
     /**
      * Process actions
      *
@@ -21,10 +13,20 @@ class Controller
      */
     public function process()
     {
-        $this->checkForInputData();
+        $this->processInputDataIfNeeded();
         $response = $this->_getProcessedActionState();
         if (!$response) {
             throw new Exception('Nothing to do or unknown error occurred.');
+        }
+    }
+
+    /**
+     * @throws Exception
+     */
+    private function processInputDataIfNeeded()
+    {
+        if (isset($_POST['field'])) {
+            Logic::process($_POST['field']);
         }
     }
 
@@ -36,14 +38,7 @@ class Controller
      */
     private function _getProcessedActionState()
     {
-        View::show();
-        return;
-    }
-
-    private function checkForInputData() {
-        if (isset($_POST['field'])) {
-            Logic::procces($_POST['field']);
-        }
+        return View::show();
     }
 
 }

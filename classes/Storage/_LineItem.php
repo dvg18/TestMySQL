@@ -1,7 +1,11 @@
 <?php
 
-namespace DB;
+namespace Storage;
 
+/**
+ * Class _LineItem
+ * @package Storage
+ */
 class _LineItem
 {
     /**

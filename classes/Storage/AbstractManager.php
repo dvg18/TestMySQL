@@ -1,19 +1,19 @@
 <?php
 
-namespace DB;
+namespace Storage;
 
 use BaseClass;
 use Exception;
-use Storage\CommonInterface;
-use DB\_LineItem;
-use DB\LineItem;
 
 /**
  * Class for working with MySql storage
- * @package DB
+ * @package Storage
  */
 class AbstractManager implements CommonInterface
 {
+    /** @var string */
+    const STORAGE_PATH_NAME = 'Storage';
+
     /** @var string */
     private $tableName;
 
@@ -29,7 +29,7 @@ class AbstractManager implements CommonInterface
      */
     public function __construct($entityName)
     {
-        $factoryClass = 'DB\_' . $entityName;
+        $factoryClass = self::STORAGE_PATH_NAME . '\_' . $entityName;
         $this->tableName = $factoryClass::getTableName();
         $this->ptfMapping = $factoryClass::getPropertyToFieldMapping();
         $this->entityName = $entityName;
@@ -44,7 +44,7 @@ class AbstractManager implements CommonInterface
         $item = API::selectOne('SELECT * FROM ' . $this->tableName . ' WHERE id = :id', array(':id' => $id));
         return empty($item)
             ? FALSE
-            : $this->_extractItemFromDB($item);
+            : $this->_extractItemFromQueryResult($item);
     }
 
     /**
@@ -64,20 +64,20 @@ class AbstractManager implements CommonInterface
         );
         $items = array();
         foreach ($itemsIds AS $item) {
-            $items[] = $this->_extractItemFromDB($item);
+            $items[] = $this->_extractItemFromQueryResult($item);
         }
         return $items;
     }
 
     /**
-     * Extract entity from DB
+     * Extract entity from Storage
      *
      * @param BaseClass $item
      * @return LineItem
      */
-    private function _extractItemFromDB($item)
+    private function _extractItemFromQueryResult($item)
     {
-        $className = 'DB\\' . $this->entityName;
+        $className = self::STORAGE_PATH_NAME . '\\' . $this->entityName;
         $entityItem = new $className;
         foreach ($this->ptfMapping as $propertyName => $propertyValue) {
             $entityItem->$propertyName = $item->$propertyValue;
@@ -124,7 +124,6 @@ class AbstractManager implements CommonInterface
     public function update(BaseClass $entity)
     {
         $values = '';
-//        print_r($entity);
         foreach ($this->ptfMapping as $key => $value) {
             $values .= $value . '=' . (empty($entity->$key)
                 ? 'NULL'

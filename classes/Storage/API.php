@@ -1,12 +1,12 @@
 <?php
 
-namespace DB;
+namespace Storage;
 
 use PDO;
 
 /**
  * Data Base API
- * @package DB
+ * @package Storage
  */
 class API
 {
@@ -57,7 +57,7 @@ class API
     /**
      * Bind connection params to role
      *
-     * @param \DB\Params\Connection $params
+     * @param \Storage\Params\Connection $params
      * @param int $role Role
      * @return void
      * @throws \Exception
@@ -73,7 +73,7 @@ class API
     }
 
     /**
-     * Reconnect to DB using role
+     * Reconnect to Storage using role
      *
      * @param bool|int $role
      */
@@ -96,7 +96,7 @@ class API
     /**
      * Connect using connection params and role
      *
-     * @param \DB\Params\Connection $params
+     * @param \Storage\Params\Connection $params
      * @param int $role Role
      * @return PDO
      */
@@ -165,14 +165,13 @@ class API
      */
     public static function execute($sql, $vars = array())
     {
-        print_r($sql);
         $statement = self::_tryGetPreparedStatement($sql);
         $statement->execute($vars);
         return $statement->rowCount();
     }
 
     /**
-     * Select multiple rows from DB
+     * Select multiple rows from Storage
      *
      * @param string $sql SQL query
      * @param array $vars Array of params to bind. Example: array(":id" => 2)
@@ -209,7 +208,7 @@ class API
     }
 
     /**
-     * Select one row from DB
+     * Select one row from Storage
      *
      * @param string $sql SQL query
      * @param array $vars Array of params to bind. Example: array(":id" => 2)
@@ -225,7 +224,7 @@ class API
     }
 
     /**
-     * Insert into DB
+     * Insert into Storage
      *
      * @param string $sql SQL query
      * @param array $vars Array of params to bind. Example: array(":id" => 2)

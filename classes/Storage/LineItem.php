@@ -1,9 +1,13 @@
 <?php
 
-namespace DB;
+namespace Storage;
 
 use BaseClass;
 
+/**
+ * Class LineItem
+ * @package Storage
+ */
 class LineItem extends BaseClass //implements Item
 {
     /** @var int Unique ID */
@@ -43,9 +47,8 @@ class LineItem extends BaseClass //implements Item
 
 /**
  * Class LineItemManager
- * @package DB
+ * @package Storage
  */
 class LineItemManager extends AbstractManager
 {
-
 }
